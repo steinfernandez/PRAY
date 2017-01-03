@@ -13,7 +13,7 @@ public class populationScript : MonoBehaviour {
 		foreach (GameObject c in GameObject.FindGameObjectsWithTag("City")) {
 			int tmpPopulation = populationBase + Random.Range (-2000, 2000);
 			c.GetComponent<GenerateCity>().GenerateCityInit(tmpPopulation);
-			Debug.Log (tmpPopulation);
+			//Debug.Log (tmpPopulation);
 
 		}
 	}
