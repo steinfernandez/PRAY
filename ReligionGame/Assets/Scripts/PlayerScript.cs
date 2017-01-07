@@ -5,10 +5,12 @@ public class PlayerScript : MonoBehaviour {
 
     public GameObject defaultUI;
     public GameObject cityUI;
+    GameObject gameManager;
 
     // Use this for initialization
     void Start ()
     {
+        gameManager = this.gameObject;
     }
 	
 	// Update is called once per frame
@@ -22,8 +24,17 @@ public class PlayerScript : MonoBehaviour {
             {
                 if (hit.collider.gameObject.CompareTag("City"))
                 {
-                    Debug.Log("You selected a city!");
                     hit.collider.gameObject.GetComponent<CityScript>().OnSelect();
+                }
+                else
+                {
+                    //unselect all cities, open global menu
+                    foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+                    {
+                        c.GetComponent<CityScript>().selected = false;
+                    }
+                    gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
+                    gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                 }
             }
         }

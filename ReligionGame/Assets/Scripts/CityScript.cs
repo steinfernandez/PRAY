@@ -3,15 +3,16 @@ using System.Collections;
 
 public class CityScript : MonoBehaviour {
     public bool selected = false;
+    int cityID;
     [SerializeField]
     GameObject defaultUI;
     [SerializeField]
-    GameObject cityUI;
     GameObject gameManager;
 
     // Use this for initialization
     void Start ()
     {
+        cityID = this.gameObject.name[4] - 48;
 	}
 	
 	// Update is called once per frame
@@ -30,9 +31,11 @@ public class CityScript : MonoBehaviour {
         }
         //change selected status of this unit
         selected = true;
-        //display UI info
-        defaultUI.SetActive(false);
-        cityUI.SetActive(true);
+        //activate UI
+        gameManager.GetComponent<MenuManagerScript>().OpenLocalMenu();
+        //set selected city id
+        gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(cityID);
+
     }
 
     void UpdateSelectionCircle()

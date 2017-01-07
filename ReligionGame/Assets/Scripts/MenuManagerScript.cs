@@ -17,15 +17,28 @@ public class MenuManagerScript : MonoBehaviour {
     [SerializeField]
     GameObject GlobalUpgradeMenu;
 
+    int selectedCity;
+
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        selectedCity = 0;	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public int GetSelectedCity()
+    {
+        return selectedCity;
+    }
+
+    public void SetSelectedCity(int c)
+    {
+        selectedCity = c;
+    }
 
     void CloseAllMenus()
     {
