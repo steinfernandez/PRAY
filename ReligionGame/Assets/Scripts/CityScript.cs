@@ -49,4 +49,9 @@ public class CityScript : MonoBehaviour {
             this.gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
     }
+
+    void UpdateFollowerPopulation()
+    {
+        
+    }
 }

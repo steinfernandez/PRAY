@@ -6,9 +6,13 @@ public class GenerateCity: MonoBehaviour {
 
 	int populationCity;
 	public Person[] populationArray;
+    [SerializeField]
+    int followers;
 
 	public struct Person
 	{
+        public bool following;
+        public float loyalty;
 		public float maleFemale;
 		public float straightGay;
 		public float individualistCollectivist;
@@ -27,6 +31,8 @@ public class GenerateCity: MonoBehaviour {
 		populationArray = new Person[populationCity];
 		for(int i=0; i<populationCity; i++) {
 			Person temp = new Person ();
+            temp.following = false;
+            temp.loyalty = Random.Range(0, 0.3f);
 			temp.maleFemale = Random.Range (0, 1);
 			temp.straightGay = Random.Range (0, 1);
 			temp.individualistCollectivist = Random.Range (0, 1);
@@ -40,13 +46,48 @@ public class GenerateCity: MonoBehaviour {
 		}
 	}
 
-	void Start() {
-		
+	void Start()
+    {
+        followers = 0;		
 	}
 
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+        UpdateFollowerPopulation();
+        if (followers > 0)
+            Debug.Log(followers);
 	}
+
+    void UpdateFollowerPopulation()
+    {
+        followers = 0;
+        for(int i=0;i<populationCity;i++)
+        {
+            if((populationArray[i].loyalty>59)&&(populationArray[i].following = false))
+            {
+                populationArray[i].following = true;
+            }
+            else if((populationArray[i].loyalty<40)&&(populationArray[i].following = true))
+            {
+                populationArray[i].following = false;
+            }
+            if (populationArray[i].following == true)
+            {
+                followers++;
+            }
+        }
+    }
+
+    public void InitializeBaseFollowers()
+    {
+        Debug.Log("initializing base followers in starting city");
+        for(int i=0;i<(populationCity/3);i++)
+        {
+            populationArray[i].loyalty += 40;
+            populationArray[i].following = true;
+            followers++;
+        }
+    }
 }
