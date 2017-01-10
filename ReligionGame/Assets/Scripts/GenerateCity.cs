@@ -48,7 +48,7 @@ public class GenerateCity: MonoBehaviour {
 
 	void Start()
     {
-        followers = 0;		
+        followers = 0;
 	}
 
 	
@@ -89,5 +89,19 @@ public class GenerateCity: MonoBehaviour {
             populationArray[i].following = true;
             followers++;
         }
+    }
+
+    public float CalculateIncome()
+    {
+        float income = 0;
+        for(int i=0;i<populationCity;i++)
+        {
+            if (populationArray[i].loyalty > 40)
+            {
+                income += Mathf.Pow(((populationArray[i].loyalty - 40)*5f), 2);
+            }
+        }
+        Debug.Log("income:"+income+" from population:"+populationCity);
+        return income;
     }
 }
