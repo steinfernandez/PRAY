@@ -55,9 +55,7 @@ public class GenerateCity: MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        UpdateFollowerPopulation();
-        if (followers > 0)
-            Debug.Log(followers);
+
 	}
 
     void UpdateFollowerPopulation()
