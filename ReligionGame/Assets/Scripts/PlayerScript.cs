@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -7,6 +8,9 @@ public class PlayerScript : MonoBehaviour {
     public GameObject cityUI;
     GameObject gameManager;
     int actionPoints;
+    const int MAXIMUM_ACTION_POINTS = 5;
+    [SerializeField]
+    GameObject actionPointsUI;
 
 
     // Use this for initialization
@@ -19,6 +23,8 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        Debug.Log("action points:" + actionPoints);
+        UpdateActionPointDisplay();
         if (this.gameObject.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
             if (Input.GetMouseButtonDown(0))
@@ -48,9 +54,12 @@ public class PlayerScript : MonoBehaviour {
 
     public void QueuePlayerAction()
     {
-        //StartCoroutine(IE_QueuePlayerAction());
-        InvokeRepeating("IE_QueuePlayerAction",0.1f,0.1f);
-        gameManager.GetComponent<TurnFSMScript>().IncrementRunningInvokes();
+        if (actionPoints >= 3)
+        {
+            InvokeRepeating("IE_QueuePlayerAction", 0.1f, 0.1f);
+            gameManager.GetComponent<TurnFSMScript>().IncrementRunningInvokes();
+            actionPoints -= 3;
+        }
     }
 
     void IE_QueuePlayerAction()
@@ -61,5 +70,15 @@ public class PlayerScript : MonoBehaviour {
             CancelInvoke("IE_QueuePlayerAction");
             gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
         }
+    }
+
+    public void RegenerateActionPoints()
+    {
+        actionPoints = MAXIMUM_ACTION_POINTS;
+    }
+
+    void UpdateActionPointDisplay()
+    {
+        actionPointsUI.GetComponent<Text>().text = actionPoints.ToString();
     }
 }

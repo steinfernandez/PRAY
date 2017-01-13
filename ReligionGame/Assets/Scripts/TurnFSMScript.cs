@@ -50,6 +50,7 @@ public class TurnFSMScript : MonoBehaviour {
                     Debug.Log(timeTracker);
                     if (runningInvokes == 0)
                     {
+                        this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
                         currentState = GameStates.PLAYERTURN;
                         timeTracker = 0f;
                     }
