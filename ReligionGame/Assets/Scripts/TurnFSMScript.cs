@@ -15,12 +15,19 @@ public class TurnFSMScript : MonoBehaviour {
         WIN
     }
 
+    private int runningInvokes;
+    private float minimumGameTurnTime;
+    private float timeTracker;
+
     private GameStates currentState;
 
 	// Use this for initialization
 	void Start ()
     {
         currentState = GameStates.START;
+        runningInvokes = 0;
+        minimumGameTurnTime = 1f;
+        timeTracker = 0f;
 	}
 	
 	// Update is called once per frame
@@ -38,6 +45,16 @@ public class TurnFSMScript : MonoBehaviour {
             case (GameStates.PLAYERTURN):
                 break;
             case (GameStates.GAMETURN):
+                if(timeTracker>minimumGameTurnTime)
+                {
+                    Debug.Log(timeTracker);
+                    if (runningInvokes == 0)
+                    {
+                        currentState = GameStates.PLAYERTURN;
+                        timeTracker = 0f;
+                    }
+                }
+                timeTracker += Time.deltaTime;
                 break;
             case (GameStates.WIN):
                 break;
@@ -55,5 +72,15 @@ public class TurnFSMScript : MonoBehaviour {
     public void SetState(GameStates gs)
     {
         currentState = gs;
+    }
+
+    public void IncrementRunningInvokes()
+    {
+        runningInvokes++;
+    }
+
+    public void DecrementRunningInvokes()
+    {
+        runningInvokes--;
     }
 }

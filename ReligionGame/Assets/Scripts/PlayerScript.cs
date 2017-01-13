@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
     GameObject gameManager;
     int actionPoints;
 
+
     // Use this for initialization
     void Start ()
     {
@@ -45,4 +46,20 @@ public class PlayerScript : MonoBehaviour {
         }
 	}
 
+    public void QueuePlayerAction()
+    {
+        //StartCoroutine(IE_QueuePlayerAction());
+        InvokeRepeating("IE_QueuePlayerAction",0.1f,0.1f);
+        gameManager.GetComponent<TurnFSMScript>().IncrementRunningInvokes();
+    }
+
+    void IE_QueuePlayerAction()
+    {
+        if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.GAMETURN)
+        {
+            Debug.Log("executed player action.");
+            CancelInvoke("IE_QueuePlayerAction");
+            gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
+        }
+    }
 }
