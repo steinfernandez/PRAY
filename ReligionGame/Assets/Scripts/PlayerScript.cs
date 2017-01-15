@@ -11,6 +11,11 @@ public class PlayerScript : MonoBehaviour {
     const int MAXIMUM_ACTION_POINTS = 5;
     [SerializeField]
     GameObject actionPointsUI;
+    [SerializeField]
+    GameObject confirmationUI;
+    public ArrayList playerActionQueue;
+    string confirmedAction;
+    int confirmedActionCost;
 
 
     // Use this for initialization
@@ -18,12 +23,15 @@ public class PlayerScript : MonoBehaviour {
     {
         actionPoints = 5;
         gameManager = this.gameObject;
+        playerActionQueue = new ArrayList();
+        confirmedAction = null;
+        confirmedActionCost = 0;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log("action points:" + actionPoints);
+        Debug.Log("queue size:" + playerActionQueue.Count);
         UpdateActionPointDisplay();
         if (this.gameObject.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
@@ -54,11 +62,26 @@ public class PlayerScript : MonoBehaviour {
 
     public void QueuePlayerAction()
     {
+        /*
         if (actionPoints >= 3)
         {
             InvokeRepeating("IE_QueuePlayerAction", 0.1f, 0.1f);
             gameManager.GetComponent<TurnFSMScript>().IncrementRunningInvokes();
             actionPoints -= 3;
+        }
+        */
+        //enqueue player action
+        if (actionPoints >= 3)
+        {
+            //playerActionQueue.Add("IE_QueuePlayerAction");
+            confirmedAction = "IE_QueuePlayerAction";
+            confirmedActionCost = 3;
+            confirmationUI.SetActive(true);
+        }
+        else
+        {
+            //not enough action points
+            Debug.Log("not enough action points.");
         }
     }
 
@@ -67,7 +90,7 @@ public class PlayerScript : MonoBehaviour {
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.GAMETURN)
         {
             Debug.Log("executed player action.");
-            CancelInvoke("IE_QueuePlayerAction");
+            //CancelInvoke("IE_QueuePlayerAction");
             gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
         }
     }
@@ -80,5 +103,25 @@ public class PlayerScript : MonoBehaviour {
     void UpdateActionPointDisplay()
     {
         actionPointsUI.GetComponent<Text>().text = actionPoints.ToString();
+    }
+
+    public void OnConfirmAction()
+    {
+        playerActionQueue.Add(confirmedAction);
+        actionPoints -= confirmedActionCost;
+        confirmedAction = null;
+        confirmedActionCost = 0;
+        confirmationUI.SetActive(false);
+    }
+
+    public void OnCancelAction()
+    {
+        //playerActionQueue.RemoveAt(playerActionQueue.Count-1);
+        confirmationUI.SetActive(false);
+    }
+
+    public void ClearPlayerActionQueue()
+    {
+        playerActionQueue.Clear();
     }
 }

@@ -15,9 +15,9 @@ public class TurnFSMScript : MonoBehaviour {
         WIN
     }
 
-    private int runningInvokes;
     private float minimumGameTurnTime;
     private float timeTracker;
+    private int runningInvokes;
 
     private GameStates currentState;
 
@@ -25,9 +25,9 @@ public class TurnFSMScript : MonoBehaviour {
 	void Start ()
     {
         currentState = GameStates.START;
-        runningInvokes = 0;
         minimumGameTurnTime = 1f;
         timeTracker = 0f;
+        runningInvokes = 0;
 	}
 	
 	// Update is called once per frame
@@ -48,12 +48,29 @@ public class TurnFSMScript : MonoBehaviour {
                 if(timeTracker>minimumGameTurnTime)
                 {
                     Debug.Log(timeTracker);
+                    //execute queued actions and calculate results
+                    string[] tempQueue;
+                    int length = this.gameObject.GetComponent<PlayerScript>().playerActionQueue.Count;
+                    if (length > 0)
+                    {
+                        tempQueue = new string[10];
+                        this.gameObject.GetComponent<PlayerScript>().playerActionQueue.CopyTo(tempQueue, 0);
+                        for (int i = 0; i < length; i++)
+                        {
+                            Debug.Log("invoking " + tempQueue[i]);
+                            this.gameObject.GetComponent<PlayerScript>().Invoke(tempQueue[i], 0);
+                            IncrementRunningInvokes();
+                        }
+                        //empty playeractionqueue
+                        this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
+                    }
+                    //regenerate action points and hand control back to player
+                    this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
                     if (runningInvokes == 0)
                     {
-                        this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
                         currentState = GameStates.PLAYERTURN;
-                        timeTracker = 0f;
                     }
+                    timeTracker = 0f;
                 }
                 timeTracker += Time.deltaTime;
                 break;
@@ -75,7 +92,7 @@ public class TurnFSMScript : MonoBehaviour {
         currentState = gs;
     }
 
-    public void IncrementRunningInvokes()
+    void IncrementRunningInvokes()
     {
         runningInvokes++;
     }

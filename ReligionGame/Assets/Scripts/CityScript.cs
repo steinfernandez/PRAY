@@ -24,7 +24,7 @@ public class CityScript : MonoBehaviour {
     public void OnSelect()
     {
         float inc = this.gameObject.GetComponent<GenerateCity>().CalculateIncome();
-        Debug.Log("OnSelect");
+        //Debug.Log("OnSelect");
         //change selection of all other units to false
         foreach(GameObject c in GameObject.FindGameObjectsWithTag("City"))
         {
