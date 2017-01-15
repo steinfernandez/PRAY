@@ -5,19 +5,27 @@ using UnityEngine.UI;
 
 public class moneyManager : MonoBehaviour {
 
-    int playerMoney = 0;
+    float playerMoney;
     [SerializeField]
     GameObject moneyUI;
+    [SerializeField]
+    GameObject gameManager;
 
 	// Use this for initialization
 	void Start ()
     {
-        moneyUI.GetComponent<Text>().text = "0";
-	}
+        playerMoney = 0;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+        //change to invokeRepeating for added efficiency later
+        moneyUI.GetComponent<Text>().text = ((int)playerMoney).ToString();
+    }
+
+    public void AddPlayerMoney(float c)
+    {
+        playerMoney += c;
+    }
 }

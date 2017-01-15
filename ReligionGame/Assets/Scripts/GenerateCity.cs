@@ -58,7 +58,7 @@ public class GenerateCity: MonoBehaviour {
 
 	}
 
-    void UpdateFollowerPopulation()
+    public void UpdateFollowerPopulation()
     {
         followers = 0;
         for(int i=0;i<populationCity;i++)

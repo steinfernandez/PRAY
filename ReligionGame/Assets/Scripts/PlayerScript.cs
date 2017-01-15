@@ -62,18 +62,8 @@ public class PlayerScript : MonoBehaviour {
 
     public void QueuePlayerAction()
     {
-        /*
         if (actionPoints >= 3)
         {
-            InvokeRepeating("IE_QueuePlayerAction", 0.1f, 0.1f);
-            gameManager.GetComponent<TurnFSMScript>().IncrementRunningInvokes();
-            actionPoints -= 3;
-        }
-        */
-        //enqueue player action
-        if (actionPoints >= 3)
-        {
-            //playerActionQueue.Add("IE_QueuePlayerAction");
             confirmedAction = "IE_QueuePlayerAction";
             confirmedActionCost = 3;
             confirmationUI.SetActive(true);
@@ -90,7 +80,6 @@ public class PlayerScript : MonoBehaviour {
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.GAMETURN)
         {
             Debug.Log("executed player action.");
-            //CancelInvoke("IE_QueuePlayerAction");
             gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
         }
     }
@@ -116,7 +105,6 @@ public class PlayerScript : MonoBehaviour {
 
     public void OnCancelAction()
     {
-        //playerActionQueue.RemoveAt(playerActionQueue.Count-1);
         confirmationUI.SetActive(false);
     }
 
