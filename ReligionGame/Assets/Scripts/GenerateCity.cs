@@ -102,4 +102,14 @@ public class GenerateCity: MonoBehaviour {
         Debug.Log("income:"+income+" from population:"+populationCity);
         return income;
     }
+
+    public int GetFollowers()
+    {
+        return followers;
+    }
+
+    public int GetPopulation()
+    {
+        return populationArray.Length;
+    }
 }
