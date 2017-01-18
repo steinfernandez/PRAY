@@ -41,8 +41,10 @@ public class TurnFSMScript : MonoBehaviour {
             case (GameStates.START):
                 //populate all cities and initialize base follower population
                 this.gameObject.GetComponent<populationScript>().PopulateCities();
-                //update global display
+                //update global display of followers and loyalty
                 this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
+                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
+                //this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalFollowerDisplay();
                 //switching to first player turn
                 currentState = GameStates.PLAYERTURN;
                 break;
@@ -58,6 +60,7 @@ public class TurnFSMScript : MonoBehaviour {
                         UpdateIncome();
                         this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
                         this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
+                        this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
                         monadFunctionExecution = true;
                     }
                     if (runningInvokes == 0)

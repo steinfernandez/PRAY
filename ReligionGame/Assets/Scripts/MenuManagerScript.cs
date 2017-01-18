@@ -19,6 +19,12 @@ public class MenuManagerScript : MonoBehaviour {
     GameObject GlobalUpgradeMenu;
     [SerializeField]
     GameObject GlobalFollowerNumDisplay;
+    [SerializeField]
+    GameObject GlobalAverageFollowerLoyaltyDisplay;
+    [SerializeField]
+    GameObject LocalFollowerNumDisplay;
+    [SerializeField]
+    GameObject LocalAverageFollowerLoyaltyDisplay;
 
     GameObject[] cities;
 
@@ -40,7 +46,7 @@ public class MenuManagerScript : MonoBehaviour {
 
     public void UpdateGlobalFollowerDisplay()
     {
-        Debug.Log("Updating global follower display");
+        //Debug.Log("Updating global follower display");
         int globalFollowerPopulation = 0;
         int globalPopulation = 0;
         foreach(GameObject c in cities)
@@ -53,7 +59,36 @@ public class MenuManagerScript : MonoBehaviour {
         //Debug.Log(followerPercentage);
         GlobalFollowerNumDisplay.GetComponent<Text>().text = "Followers: \n" + globalFollowerPopulation.ToString() + " (" + followerPercentage.ToString("F2") + "%)";
         //GlobalFollowerNumDisplay.GetComponent<Text>().text = "BOOOOBIES";
+    }
 
+    public void UpdateGlobalLoyaltyDisplay()
+    {
+        float globalLoyalty = 0;
+        int divisor = 0;
+        foreach(GameObject c in cities)
+        {
+            if (c.GetComponent<GenerateCity>().GetFollowers() > 0)
+            {
+                globalLoyalty += c.GetComponent<GenerateCity>().CalculateMeanLoyalty();
+                divisor++;
+            }
+        }
+        globalLoyalty = globalLoyalty / divisor;
+        //Debug.Log(globalLoyalty);
+        GlobalAverageFollowerLoyaltyDisplay.GetComponent<Text>().text = "Avg. Follower Loyalty: " + globalLoyalty.ToString("F2") + "%";
+    }
+
+    public void UpdateLocalDisplay()
+    {
+        string selectedCityName = "City" + selectedCity.ToString();
+        GameObject currentCity = GameObject.Find(selectedCityName); //eventually display city names
+        //get followers, calculate percentage, update display
+        int localFollowers = currentCity.GetComponent<GenerateCity>().GetFollowers();
+        float localFollowerPercentage = (float) localFollowers * 100f / currentCity.GetComponent<GenerateCity>().GetPopulation();
+        LocalFollowerNumDisplay.GetComponent<Text>().text = "Followers: \n" + localFollowers.ToString() + " (" + localFollowerPercentage.ToString("F2") + "%)";
+        //get local loyalty, update display
+        float localLoyalty = currentCity.GetComponent<GenerateCity>().CalculateMeanLoyalty();
+        LocalAverageFollowerLoyaltyDisplay.GetComponent<Text>().text = "Avg. Follower Loyalty: " + localLoyalty.ToString("F2") + "%";
     }
 
     public int GetSelectedCity()

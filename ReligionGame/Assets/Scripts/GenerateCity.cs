@@ -112,4 +112,23 @@ public class GenerateCity: MonoBehaviour {
     {
         return populationArray.Length;
     }
+
+    public float CalculateMeanLoyalty()
+    {
+        //todo: calculate median instead
+        if (followers != 0)
+        {
+            float totalLoyalty = 0;
+            for (int i = 0; i < populationCity; i++)
+            {
+                if (populationArray[i].following == true)
+                {
+                    totalLoyalty += populationArray[i].loyalty;
+                }
+            }
+            return (totalLoyalty / followers);
+        }
+        else
+            return 0;
+    }
 }

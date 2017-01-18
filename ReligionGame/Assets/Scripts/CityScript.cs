@@ -34,7 +34,8 @@ public class CityScript : MonoBehaviour {
         gameManager.GetComponent<MenuManagerScript>().OpenLocalMenu();
         //set selected city id
         gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(cityID);
-
+        //update local stats
+        gameManager.GetComponent<MenuManagerScript>().UpdateLocalDisplay(); //TODO: update local submenus
     }
 
     void UpdateSelectionCircle()
