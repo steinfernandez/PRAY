@@ -8,11 +8,15 @@ public class CityScript : MonoBehaviour {
     GameObject defaultUI;
     [SerializeField]
     GameObject gameManager;
+	public GenerateCity city;
+	private int populationBase = 5000;
 
     // Use this for initialization
     void Start ()
     {
         cityID = this.gameObject.name[4] - 48;
+		int tmpPopulation = populationBase + Random.Range(-2000, 2000);
+		city = new GenerateCity(tmpPopulation);
 	}
 	
 	// Update is called once per frame

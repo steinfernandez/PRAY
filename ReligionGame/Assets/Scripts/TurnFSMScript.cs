@@ -107,8 +107,8 @@ public class TurnFSMScript : MonoBehaviour {
         cities = GameObject.FindGameObjectsWithTag("City");
         foreach (GameObject c in cities)
         {
-            c.GetComponent<GenerateCity>().UpdateFollowerPopulation();
-            totalIncome += c.GetComponent<GenerateCity>().CalculateIncome();
+			c.GetComponent<CityScript>().city.UpdateFollowerPopulation();
+			totalIncome += c.GetComponent<CityScript>().city.CalculateIncome();
         }
         this.gameObject.GetComponent<moneyManager>().AddPlayerMoney(totalIncome);
     }

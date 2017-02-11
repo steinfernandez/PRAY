@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateCity: MonoBehaviour {
+public class GenerateCity {
 
 	int populationCity;
 	public Person[] populationArray;
@@ -26,8 +26,8 @@ public class GenerateCity: MonoBehaviour {
 
 
 	// Use this for initialization
-	public void GenerateCityInit (int population) {
-		populationCity = population;
+	public void GenerateCityInit () {
+		
 		populationArray = new Person[populationCity];
 		for(int i=0; i<populationCity; i++) {
 			Person temp = new Person ();
@@ -46,17 +46,14 @@ public class GenerateCity: MonoBehaviour {
 		}
 	}
 
-	void Start()
+	public GenerateCity(int population)
     {
         followers = 0;
+		populationCity = population;
+		GenerateCityInit ();
 	}
 
-	
-	// Update is called once per frame
-	void Update ()
-    {
 
-	}
 
     public void UpdateFollowerPopulation()
     {
