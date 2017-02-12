@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ public class PlayerScript : MonoBehaviour {
     public ArrayList playerActionQueue;
     string confirmedAction;
     int confirmedActionCost;
+    private float money;
+    private int confirmedActionGold;
 
 
     // Use this for initialization
@@ -26,6 +29,7 @@ public class PlayerScript : MonoBehaviour {
         playerActionQueue = new ArrayList();
         confirmedAction = null;
         confirmedActionCost = 0;
+        money = gameManager.GetComponent<moneyManager>().GetPlayerMoney();
     }
 	
 	// Update is called once per frame
@@ -65,19 +69,25 @@ public class PlayerScript : MonoBehaviour {
         int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
         // just an example. Haven't figured out yet
         SendMissionary action = new SendMissionary(cityID);
+        /*
+        Type t = Type.GetType("SendMissionary");
+        object action = System.Activator.CreateInstance (t, cityID);
+        */
         Debug.Log("city:"+cityID+"action:"+actionID);
         int APcost = action.AP;
+        int gold = action.cost;
 
-        if (actionPoints >= APcost)
+        if ((actionPoints >= APcost) && (money >= gold))
         {
             confirmedAction = "IE_QueuePlayerAction";
             confirmedActionCost = APcost;
+            confirmedActionGold = gold;
             confirmationUI.SetActive(true);
         }
         else
         {
-            //not enough action points
-            Debug.Log("not enough action points.");
+            //not enough action points or gold
+            Debug.Log("not enough action points or gold.");
         }
     }
 
@@ -104,6 +114,7 @@ public class PlayerScript : MonoBehaviour {
     {
         playerActionQueue.Add(confirmedAction);
         actionPoints -= confirmedActionCost;
+        gameManager.GetComponent<moneyManager>().AddPlayerMoney(-confirmedActionGold);
         confirmedAction = null;
         confirmedActionCost = 0;
         confirmationUI.SetActive(false);

@@ -28,4 +28,9 @@ public class moneyManager : MonoBehaviour {
     {
         playerMoney += c;
     }
+
+    public float GetPlayerMoney()
+    {
+        return playerMoney;
+    }
 }
