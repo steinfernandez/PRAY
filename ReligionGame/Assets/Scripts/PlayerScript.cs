@@ -60,12 +60,18 @@ public class PlayerScript : MonoBehaviour {
         }
 	}
 
-    public void QueuePlayerAction()
+    public void QueuePlayerAction(int actionID)
     {
-        if (actionPoints >= 3)
+        int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
+        // just an example. Haven't figured out yet
+        SendMissionary action = new SendMissionary(cityID);
+        Debug.Log("city:"+cityID+"action:"+actionID);
+        int APcost = action.AP;
+
+        if (actionPoints >= APcost)
         {
             confirmedAction = "IE_QueuePlayerAction";
-            confirmedActionCost = 3;
+            confirmedActionCost = APcost;
             confirmationUI.SetActive(true);
         }
         else
