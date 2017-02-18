@@ -51,8 +51,8 @@ public class MenuManagerScript : MonoBehaviour {
         int globalPopulation = 0;
         foreach(GameObject c in cities)
         {
-            globalFollowerPopulation += c.GetComponent<GenerateCity>().GetFollowers();
-            globalPopulation += c.GetComponent<GenerateCity>().GetPopulation();
+			globalFollowerPopulation += c.GetComponent<CityScript>().city.GetFollowers();
+			globalPopulation += c.GetComponent<CityScript>().city.GetPopulation();
         }
         //Debug.Log("global followers: " + globalFollowerPopulation.ToString() + "out of " + globalPopulation.ToString());
         float followerPercentage = (float) globalFollowerPopulation * 100f / globalPopulation;
@@ -67,9 +67,9 @@ public class MenuManagerScript : MonoBehaviour {
         int divisor = 0;
         foreach(GameObject c in cities)
         {
-            if (c.GetComponent<GenerateCity>().GetFollowers() > 0)
+			if (c.GetComponent<CityScript>().city.GetFollowers() > 0)
             {
-                globalLoyalty += c.GetComponent<GenerateCity>().CalculateMeanLoyalty();
+				globalLoyalty += c.GetComponent<CityScript>().city.CalculateMeanLoyalty();
                 divisor++;
             }
         }
