@@ -14,8 +14,8 @@ public class PlayerScript : MonoBehaviour {
     GameObject actionPointsUI;
     [SerializeField]
     GameObject confirmationUI;
-    public ArrayList playerActionQueue;
-    string confirmedAction;
+    public Queue playerActionQueue;
+    Actions confirmedAction;
     int confirmedActionCost;
     private float money;
     private int confirmedActionGold;
@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour {
     {
         actionPoints = 5;
         gameManager = this.gameObject;
-        playerActionQueue = new ArrayList();
+        playerActionQueue = new Queue();
         confirmedAction = null;
         confirmedActionCost = 0;
         money = gameManager.GetComponent<moneyManager>().GetPlayerMoney();
@@ -73,7 +73,7 @@ public class PlayerScript : MonoBehaviour {
 
         if ((actionPoints >= APcost) && (money >= gold))
         {
-            confirmedAction = "IE_QueuePlayerAction";
+            confirmedAction = action;
             confirmedActionCost = APcost;
             confirmedActionGold = gold;
             confirmationUI.SetActive(true);
@@ -106,11 +106,12 @@ public class PlayerScript : MonoBehaviour {
 
     public void OnConfirmAction()
     {
-        playerActionQueue.Add(confirmedAction);
+        playerActionQueue.Enqueue(confirmedAction);
         actionPoints -= confirmedActionCost;
         gameManager.GetComponent<moneyManager>().AddPlayerMoney(-confirmedActionGold);
         confirmedAction = null;
         confirmedActionCost = 0;
+        confirmedActionGold = 0;
         confirmationUI.SetActive(false);
     }
 

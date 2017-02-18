@@ -35,7 +35,7 @@ public class TurnFSMScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         switch (currentState)
         {
             case (GameStates.START):
@@ -87,6 +87,7 @@ public class TurnFSMScript : MonoBehaviour {
         int length = this.gameObject.GetComponent<PlayerScript>().playerActionQueue.Count;
         if (length > 0)
         {
+            /* Sorry I don't understand so I change it
             tempQueue = new string[10];
             this.gameObject.GetComponent<PlayerScript>().playerActionQueue.CopyTo(tempQueue, 0);
             for (int i = 0; i < length; i++)
@@ -94,6 +95,13 @@ public class TurnFSMScript : MonoBehaviour {
                 Debug.Log("invoking " + tempQueue[i]);
                 this.gameObject.GetComponent<PlayerScript>().Invoke(tempQueue[i], 0);
                 IncrementRunningInvokes();
+            }
+            */
+
+            for (int i = 0; i < length; i++)
+            {
+                Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue.Dequeue();
+                action.Effect();
             }
             //empty playeractionqueue
             this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
