@@ -110,6 +110,20 @@ public class GenerateCity {
         return populationArray.Length;
     }
 
+    public void IncreaseEveryoneLoyalty(float amount)
+    {
+        for (int i = 0; i < populationCity; i++) {
+            populationArray[i].loyalty += amount;
+        }
+    }
+
+    public void IncreaseNonfollowerLoyalty(float amount)
+    {
+        for (int i = 0; i < populationCity; i++) {
+            populationArray[i].loyalty += amount;
+        }
+    }
+
     public float CalculateMeanLoyalty()
     {
         //todo: calculate median instead
