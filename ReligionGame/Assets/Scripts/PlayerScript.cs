@@ -64,16 +64,10 @@ public class PlayerScript : MonoBehaviour {
         }
 	}
 
-    public void QueuePlayerAction(int actionID)
+	public void QueuePlayerAction(Actions action)
     {
-        int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
-        // just an example. Haven't figured out yet
-        SendMissionary action = new SendMissionary(cityID);
-        /*
-        Type t = Type.GetType("SendMissionary");
-        object action = System.Activator.CreateInstance (t, cityID);
-        */
-        Debug.Log("city:"+cityID+"action:"+actionID);
+        
+		Debug.Log ("action triggered~!!!!");
         int APcost = action.AP;
         int gold = action.cost;
 
