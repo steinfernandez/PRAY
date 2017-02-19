@@ -47,7 +47,7 @@ public class SendMissionary : Actions
         // do the effect
 		string selectedCityName = "City" + selectedCity.ToString();
         GenerateCity currentCity = GameObject.Find(selectedCityName).GetComponent<CityScript>().city;
-        currentCity.IncreaseNonfollowerLoyalty(0.1f);
+        currentCity.IncreaseNonfollowerLoyalty(80f);
         Debug.Log("Execute");
         // handle cooldown
     }

@@ -32,7 +32,7 @@ public class GenerateCity {
 		for(int i=0; i<populationCity; i++) {
 			Person temp = new Person ();
             temp.following = false;
-            temp.loyalty = Random.Range(0, 0.3f);
+            temp.loyalty = Random.Range(-100f, 100f);
 			temp.maleFemale = Random.Range (0, 1);
 			temp.straightGay = Random.Range (0, 1);
 			temp.individualistCollectivist = Random.Range (0, 1);
@@ -60,11 +60,11 @@ public class GenerateCity {
         followers = 0;
         for(int i=0;i<populationCity;i++)
         {
-            if((populationArray[i].loyalty>59)&&(populationArray[i].following = false))
+            if((populationArray[i].loyalty>20)&&(populationArray[i].following == false))
             {
                 populationArray[i].following = true;
             }
-            else if((populationArray[i].loyalty<40)&&(populationArray[i].following = true))
+            else if((populationArray[i].loyalty<40)&&(populationArray[i].following == true))
             {
                 populationArray[i].following = false;
             }
@@ -80,7 +80,7 @@ public class GenerateCity {
         Debug.Log("initializing base followers in starting city");
         for(int i=0;i<(populationCity/3);i++)
         {
-            populationArray[i].loyalty += 40;
+            populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty+40f, -100f, 100f);
             populationArray[i].following = true;
             followers++;
         }
@@ -93,7 +93,7 @@ public class GenerateCity {
         {
             if (populationArray[i].loyalty > 40)
             {
-                income += Mathf.Pow(((populationArray[i].loyalty - 40)*5f), 2);
+                income += Mathf.Pow(((populationArray[i].loyalty - 40)*5f), 2); //change this formula
             }
         }
         Debug.Log("income:"+income+" from population:"+populationCity);
@@ -113,14 +113,14 @@ public class GenerateCity {
     public void IncreaseEveryoneLoyalty(float amount)
     {
         for (int i = 0; i < populationCity; i++) {
-            populationArray[i].loyalty += amount;
+            populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty + amount, -100f, 100f);
         }
     }
 
     public void IncreaseNonfollowerLoyalty(float amount)
     {
         for (int i = 0; i < populationCity; i++) {
-            populationArray[i].loyalty += amount;
+            populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty + amount, -100f, 100f);
         }
     }
 
