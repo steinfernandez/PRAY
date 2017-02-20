@@ -23,6 +23,7 @@ public class CityScript : MonoBehaviour {
 	void Update ()
     {
         UpdateSelectionCircle();
+        //Debug.Log("CityID:" + cityID + "follwers:" + city.GetFollowers());
 	}
 
     public void OnSelect()

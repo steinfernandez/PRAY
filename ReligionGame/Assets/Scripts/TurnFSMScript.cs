@@ -51,6 +51,7 @@ public class TurnFSMScript : MonoBehaviour {
             case (GameStates.PLAYERTURN):
                 break;
             case (GameStates.GAMETURN):
+
                 if(timeTracker>minimumGameTurnTime)
                 {
                     ExecuteQueuedActions();
@@ -61,6 +62,7 @@ public class TurnFSMScript : MonoBehaviour {
                         this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
                         this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
                         this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
+                        this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalDisplay();
                         monadFunctionExecution = true;
                     }
                     if (runningInvokes == 0)
@@ -83,7 +85,7 @@ public class TurnFSMScript : MonoBehaviour {
     void ExecuteQueuedActions()
     {
         //execute queued actions and calculate results
-        string[] tempQueue;
+        //string[] tempQueue;
         int length = this.gameObject.GetComponent<PlayerScript>().playerActionQueue.Count;
         if (length > 0)
         {
@@ -102,6 +104,7 @@ public class TurnFSMScript : MonoBehaviour {
             {
                 Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue.Dequeue();
                 action.Effect();
+
             }
             //empty playeractionqueue
             this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
@@ -115,7 +118,9 @@ public class TurnFSMScript : MonoBehaviour {
         cities = GameObject.FindGameObjectsWithTag("City");
         foreach (GameObject c in cities)
         {
-			c.GetComponent<CityScript>().city.UpdateFollowerPopulation();
+			Debug.Log("before update:" + c.GetComponent<CityScript>().city.GetFollowers());
+            c.GetComponent<CityScript>().city.UpdateFollowerPopulation();
+            Debug.Log("after update:" + c.GetComponent<CityScript>().city.GetFollowers());
 			totalIncome += c.GetComponent<CityScript>().city.CalculateIncome();
         }
         this.gameObject.GetComponent<moneyManager>().AddPlayerMoney(totalIncome);

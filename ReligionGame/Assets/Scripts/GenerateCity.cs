@@ -32,7 +32,7 @@ public class GenerateCity {
 		for(int i=0; i<populationCity; i++) {
 			Person temp = new Person ();
             temp.following = false;
-            temp.loyalty = Random.Range(-100f, 100f);
+            temp.loyalty = Random.Range(-100f, 0f);
 			temp.maleFemale = Random.Range (0, 1);
 			temp.straightGay = Random.Range (0, 1);
 			temp.individualistCollectivist = Random.Range (0, 1);
@@ -58,8 +58,9 @@ public class GenerateCity {
     public void UpdateFollowerPopulation()
     {
         followers = 0;
-        for(int i=0;i<populationCity;i++)
+        for(int i = 0; i < populationCity; i++)
         {
+            /*
             if((populationArray[i].loyalty>20)&&(populationArray[i].following == false))
             {
                 populationArray[i].following = true;
@@ -72,6 +73,19 @@ public class GenerateCity {
             {
                 followers++;
             }
+            */
+
+
+            if (populationArray[i].loyalty >= 40f)
+            {
+                populationArray[i].following = true;
+                followers++;
+            }
+            else
+            {
+                populationArray[i].following = false;
+            }
+
         }
     }
 
@@ -80,7 +94,8 @@ public class GenerateCity {
         Debug.Log("initializing base followers in starting city");
         for(int i=0;i<(populationCity/3);i++)
         {
-            populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty+40f, -100f, 100f);
+            //populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty+40f, -100f, 100f);
+            populationArray[i].loyalty = 40f;
             populationArray[i].following = true;
             followers++;
         }
@@ -119,9 +134,12 @@ public class GenerateCity {
 
     public void IncreaseNonfollowerLoyalty(float amount)
     {
+        Debug.Log("follwer before:" + GetFollowers());
         for (int i = 0; i < populationCity; i++) {
-            populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty + amount, -100f, 100f);
+            if (!populationArray[i].following)
+                populationArray[i].loyalty = Mathf.Clamp(populationArray[i].loyalty + amount, -100f, 100f);
         }
+        Debug.Log("Follower after: "+GetFollowers());
     }
 
     public float CalculateMeanLoyalty()

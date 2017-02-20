@@ -84,6 +84,7 @@ public class MenuManagerScript : MonoBehaviour {
         GameObject currentCity = GameObject.Find(selectedCityName); //eventually display city names
         //get followers, calculate percentage, update display
         int localFollowers = currentCity.GetComponent<CityScript>().city.GetFollowers();
+        Debug.Log("localFollwerinMenu:" + localFollowers);
         float localFollowerPercentage = (float) localFollowers * 100f / currentCity.GetComponent<CityScript>().city.GetPopulation();
         LocalFollowerNumDisplay.GetComponent<Text>().text = "Followers: \n" + localFollowers.ToString() + " (" + localFollowerPercentage.ToString("F2") + "%)";
         //get local loyalty, update display
