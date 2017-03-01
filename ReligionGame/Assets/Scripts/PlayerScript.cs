@@ -67,7 +67,7 @@ public class PlayerScript : MonoBehaviour {
 	public void QueuePlayerAction(Actions action)
     {
         
-		Debug.Log ("action triggered~!!!!");
+		//Debug.Log ("action triggered~!!!!");
         int APcost = action.AP;
         int gold = action.cost;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class TurnFSMScript : MonoBehaviour {
     private float timeTracker;
     private int runningInvokes;
     private bool monadFunctionExecution;
+    private List<List<int>> coolDownList;
 
     private GameStates currentState;
 
@@ -30,6 +32,7 @@ public class TurnFSMScript : MonoBehaviour {
         timeTracker = 0f;
         runningInvokes = 0;
         monadFunctionExecution = false;
+        coolDownList = new List<List<int>>();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +58,8 @@ public class TurnFSMScript : MonoBehaviour {
                 if(timeTracker>minimumGameTurnTime)
                 {
                     ExecuteQueuedActions();
+                    UpdateCoolDown();
+
                     //update followers and calculate income
                     if (monadFunctionExecution == false)    //these functions should only be executed once before next playerturn 
                     {
@@ -105,9 +110,33 @@ public class TurnFSMScript : MonoBehaviour {
                 Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue.Dequeue();
                 action.Effect();
 
+                // if it has cool down then add to cool down list
+                if (action.coolDown > 0)
+                {
+                    List<int> cd = new List<int>() {action.actionID, action.coolDown};
+                    coolDownList.Add(cd);
+                    // let the button be deactive so player can't press it during cooldown
+                    GetComponent<ActionScript>().DisableActionButton(action.actionID);
+                }
             }
             //empty playeractionqueue
             this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
+        }
+    }
+
+    void UpdateCoolDown()
+    {
+        // iterate throught the cool down list and check if it's done
+        for (int i = coolDownList.Count - 1; i >= 0; --i)
+        {
+            coolDownList[i][1] -= 1;
+            Debug.Log("action" + coolDownList[i][0] + " remaining:" + coolDownList[i][1]);
+            if (coolDownList[i][0] == 0)
+            {
+                // set the button active again
+                GetComponent<ActionScript>().DisableActionButton(coolDownList[i][0]);
+
+            }
         }
     }
 
@@ -118,9 +147,9 @@ public class TurnFSMScript : MonoBehaviour {
         cities = GameObject.FindGameObjectsWithTag("City");
         foreach (GameObject c in cities)
         {
-			Debug.Log("before update:" + c.GetComponent<CityScript>().city.GetFollowers());
+			//Debug.Log("before update:" + c.GetComponent<CityScript>().city.GetFollowers());
             c.GetComponent<CityScript>().city.UpdateFollowerPopulation();
-            Debug.Log("after update:" + c.GetComponent<CityScript>().city.GetFollowers());
+            //Debug.Log("after update:" + c.GetComponent<CityScript>().city.GetFollowers());
 			totalIncome += c.GetComponent<CityScript>().city.CalculateIncome();
         }
         this.gameObject.GetComponent<moneyManager>().AddPlayerMoney(totalIncome);

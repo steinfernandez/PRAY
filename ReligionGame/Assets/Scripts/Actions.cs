@@ -12,6 +12,7 @@ using UnityEngine;
 
 public class Actions
 {
+    public int actionID;
     public int cost;
     public int AP;
     public int coolDown;
@@ -36,9 +37,10 @@ public class SendMissionary : Actions
 {
     public SendMissionary(int city): base(city)
     {
-        cost = -300; // I am making this negative because currently player doesn't have any gold...
+        actionID = 1;
+        cost = -100; // I am making this negative because currently player doesn't have any gold...
         AP = 2;
-        coolDown = 4;
+        coolDown = 2;
         description = "Send missionary to this city to increase non-follower loyalty to your religion by 10.";
     }
 
@@ -58,6 +60,7 @@ public class RentBillboard : Actions
 {
     public RentBillboard(int city): base(city)
     {
+        actionID = 2;
         cost = 150;
         AP = 3;
         coolDown = 5;
@@ -81,7 +84,8 @@ public class HireTVSlot : Actions
 {
 	public HireTVSlot(int city): base(city)
 	{
-		cost = 200; 
+	    actionID = 3;
+	    cost = 200;
 		AP = 3;
 		coolDown = 2;
 		description = "Hire a random TV timeslot to advertise your religion.";
@@ -105,6 +109,7 @@ public class PosterCampaign : Actions
 {
     public PosterCampaign(int city): base(city)
     {
+        actionID = 4;
         cost = 50;
         AP = 2;
         coolDown = 2;

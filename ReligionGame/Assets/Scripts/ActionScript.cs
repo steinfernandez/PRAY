@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ActionScript : MonoBehaviour
 {
+    // These are the onClick functions for action menu buttons!
 
 	public void SendMissionaryAction() {
 		GameObject gameManager = GameObject.Find("GameManager");
@@ -35,5 +36,22 @@ public class ActionScript : MonoBehaviour
     }
 
 
+
+    // make a certain button disabled. Will be called in TurnFSM script.
+    public void DisableActionButton(int actionID)
+    {
+         // do something
+        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
+        btn.GetComponent<Button>().interactable = false;
+    }
+
+
+    // make a certain button enabled again. Will be called in TurnFSM script.
+    public void EnableActionButton(int actionID)
+    {
+        // do something
+        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
+        btn.GetComponent<Button>().interactable = true;
+    }
 
 }

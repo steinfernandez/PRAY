@@ -111,7 +111,7 @@ public class GenerateCity {
                 income += Mathf.Pow(((populationArray[i].loyalty - 40)*5f), 2); //change this formula
             }
         }
-        Debug.Log("income:"+income+" from population:"+populationCity);
+        //Debug.Log("income:"+income+" from population:"+populationCity);
         return income;
     }
 
