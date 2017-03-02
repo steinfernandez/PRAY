@@ -17,7 +17,7 @@ public class Actions
     public int AP;
     public int coolDown;
     public String description;
-	protected int selectedCity;
+	public int selectedCity;
 
     public Actions(int city)
     {

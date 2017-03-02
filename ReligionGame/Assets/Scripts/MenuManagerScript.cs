@@ -128,6 +128,20 @@ public class MenuManagerScript : MonoBehaviour {
     {
         CloseAllMenus();
         ActionMenu.SetActive(true);
+
+        // check cool down
+        List<List<int>> cooldowns = GetComponent<TurnFSMScript>().coolDownList;
+        foreach (List<int> cd in cooldowns)
+        {
+            if (cd[1] == selectedCity)
+            {
+                DisableActionButton(cd[0]);
+            }
+            else
+            {
+                EnableActionButton(cd[0]);
+            }
+        }
     }
     public void OpenPolicyMenu()
     {
@@ -143,5 +157,22 @@ public class MenuManagerScript : MonoBehaviour {
     {
         CloseAllMenus();
         GlobalUpgradeMenu.SetActive(true);
+    }
+
+    // make a certain button disabled. Will be called in TurnFSM script.
+    void DisableActionButton(int actionID)
+    {
+        // do something
+        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
+        btn.GetComponent<Button>().interactable = false;
+    }
+
+
+    // make a certain button enabled again. Will be called in TurnFSM script.
+    void EnableActionButton(int actionID)
+    {
+        // do something
+        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
+        btn.GetComponent<Button>().interactable = true;
     }
 }

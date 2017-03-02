@@ -36,22 +36,4 @@ public class ActionScript : MonoBehaviour
     }
 
 
-
-    // make a certain button disabled. Will be called in TurnFSM script.
-    public void DisableActionButton(int actionID)
-    {
-         // do something
-        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
-        btn.GetComponent<Button>().interactable = false;
-    }
-
-
-    // make a certain button enabled again. Will be called in TurnFSM script.
-    public void EnableActionButton(int actionID)
-    {
-        // do something
-        GameObject btn = GameObject.Find("Canvas/ActionMenu/ButtonPanel").transform.GetChild(actionID - 1).gameObject;
-        btn.GetComponent<Button>().interactable = true;
-    }
-
 }
