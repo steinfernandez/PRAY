@@ -40,7 +40,7 @@ public class SendMissionary : Actions
         actionID = 1;
         cost = -100; // I am making this negative because currently player doesn't have any gold...
         AP = 2;
-        coolDown = 2;
+        coolDown = 4;
         description = "Send missionary to this city to increase non-follower loyalty to your religion by 10.";
     }
 
