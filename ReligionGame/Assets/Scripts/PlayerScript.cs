@@ -12,8 +12,8 @@ public class PlayerScript : MonoBehaviour {
     const int MAXIMUM_ACTION_POINTS = 5;
     [SerializeField]
     GameObject actionPointsUI;
-    [SerializeField]
-    GameObject confirmationUI;
+    //[SerializeField]
+    //GameObject confirmationUI;
     public Queue playerActionQueue;
     Actions confirmedAction;
     int confirmedActionCost;
@@ -76,11 +76,13 @@ public class PlayerScript : MonoBehaviour {
             confirmedAction = action;
             confirmedActionCost = APcost;
             confirmedActionGold = gold;
-            confirmationUI.SetActive(true);
+            //confirmationUI.SetActive(true);
+            OnConfirmAction();
         }
         else
         {
             //not enough action points or gold
+            // TODO: alert window?
             Debug.Log("not enough action points or gold.");
         }
     }
@@ -112,13 +114,15 @@ public class PlayerScript : MonoBehaviour {
         confirmedAction = null;
         confirmedActionCost = 0;
         confirmedActionGold = 0;
-        confirmationUI.SetActive(false);
+        //confirmationUI.SetActive(false);
     }
 
+    /*
     public void OnCancelAction()
     {
         confirmationUI.SetActive(false);
     }
+    */
 
     public void ClearPlayerActionQueue()
     {
