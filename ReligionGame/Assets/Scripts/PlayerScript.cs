@@ -12,13 +12,13 @@ public class PlayerScript : MonoBehaviour {
     const int MAXIMUM_ACTION_POINTS = 5;
     [SerializeField]
     GameObject actionPointsUI;
-    //[SerializeField]
-    //GameObject confirmationUI;
     public Queue playerActionQueue;
     Actions confirmedAction;
     int confirmedActionCost;
     private float money;
     private int confirmedActionGold;
+    public GameObject actionQueueUI;
+    public GameObject actionQueueContainerUI;
 
 
     // Use this for initialization
@@ -115,6 +115,13 @@ public class PlayerScript : MonoBehaviour {
         confirmedActionCost = 0;
         confirmedActionGold = 0;
         //confirmationUI.SetActive(false);
+
+        // Visualize the action queue
+        GameObject btn = Instantiate(actionQueueUI);
+        //string str = confirmedAction.printName;
+        btn.GetComponentInChildren<Text>().text = "Action";
+        btn.transform.SetParent(actionQueueContainerUI.transform, false);
+
     }
 
     /*

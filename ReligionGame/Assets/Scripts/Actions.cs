@@ -18,6 +18,7 @@ public class Actions
     public int coolDown;
     public String description;
 	public int selectedCity;
+    public string printName;
 
     public Actions(int city)
     {
@@ -42,6 +43,7 @@ public class SendMissionary : Actions
         AP = 2;
         coolDown = 4;
         description = "Send missionary to this city to increase non-follower loyalty to your religion by 10.";
+        printName = "Send Missionary";
     }
 
     public override void Effect()
@@ -64,7 +66,8 @@ public class RentBillboard : Actions
         cost = 150;
         AP = 3;
         coolDown = 5;
-        description = "Rent a billboard in this city to proclaim salvation to the masses. ";
+        description = "Rent a billboard in this city to proclaim salvation to the masses.";
+        printName = "Rent Billboard";
     }
 
     public override void Effect()
@@ -89,6 +92,7 @@ public class HireTVSlot : Actions
 		AP = 3;
 		coolDown = 2;
 		description = "Hire a random TV timeslot to advertise your religion.";
+	    printName = "Hire TV Slot";
 	}
 
 	public override void Effect()
@@ -114,6 +118,7 @@ public class PosterCampaign : Actions
         AP = 2;
         coolDown = 2;
         description = "Put up posters proclaiming hellfire and damnation to those not of your religion.";
+        printName = "Poster Campaign";
     }
 
     public override void Effect()
