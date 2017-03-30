@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class moneyManager : MonoBehaviour {
+public class MoneyManager {
 
     float playerMoney;
-    [SerializeField]
     GameObject moneyUI;
-    [SerializeField]
-    GameObject gameManager;
+
 
 	// Use this for initialization
-	void Start ()
+	public MoneyManager ()
     {
         playerMoney = 0;
+        moneyUI = GameObject.Find("/Canvas/MoneyText");
     }
 	
-	// Update is called once per frame
-	void Update ()
+	// Update is called by FSMScript
+	public void Update ()
     {
         //change to invokeRepeating for added efficiency later
         moneyUI.GetComponent<Text>().text = ((int)playerMoney).ToString();

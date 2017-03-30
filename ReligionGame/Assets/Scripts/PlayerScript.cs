@@ -29,7 +29,7 @@ public class PlayerScript : MonoBehaviour {
         playerActionQueue = new Queue();
         confirmedAction = null;
         confirmedActionCost = 0;
-        money = gameManager.GetComponent<moneyManager>().GetPlayerMoney();
+        money = Service.moneyManager.GetPlayerMoney();
     }
 	
 	// Update is called once per frame
@@ -110,7 +110,7 @@ public class PlayerScript : MonoBehaviour {
     {
         playerActionQueue.Enqueue(confirmedAction);
         actionPoints -= confirmedActionCost;
-        gameManager.GetComponent<moneyManager>().AddPlayerMoney(-confirmedActionGold);
+        Service.moneyManager.AddPlayerMoney(-confirmedActionGold);
         confirmedAction = null;
         confirmedActionCost = 0;
         confirmedActionGold = 0;

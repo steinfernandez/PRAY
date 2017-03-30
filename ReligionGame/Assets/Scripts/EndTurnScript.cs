@@ -23,6 +23,13 @@ public class EndTurnScript : MonoBehaviour {
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
             gameManager.GetComponent<TurnFSMScript>().SetState(TurnFSMScript.GameStates.GAMETURN);
+            // destroy visible action queue
+            Transform actionQueueTran = GameObject.Find("/Canvas/ActionQueue").transform;
+            int childCount = actionQueueTran.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Destroy((actionQueueTran.GetChild(i)).gameObject);
+            }
         }
     }
 }

@@ -52,16 +52,18 @@ public class TurnFSMScript : MonoBehaviour {
                 currentState = GameStates.PLAYERTURN;
                 break;
             case (GameStates.PLAYERTURN):
+                Service.moneyManager.Update();
                 break;
             case (GameStates.GAMETURN):
 
-                if(timeTracker>minimumGameTurnTime)
+                if (timeTracker > minimumGameTurnTime)
                 {
                     ExecuteQueuedActions();
                     UpdateCoolDown();
 
                     //update followers and calculate income
-                    if (monadFunctionExecution == false)    //these functions should only be executed once before next playerturn 
+                    if (monadFunctionExecution == false
+                    ) //these functions should only be executed once before next playerturn
                     {
                         UpdateIncome();
                         this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
@@ -78,14 +80,15 @@ public class TurnFSMScript : MonoBehaviour {
                     timeTracker = 0f;
                 }
                 timeTracker += Time.deltaTime;
+                Service.moneyManager.Update();
                 break;
             case (GameStates.WIN):
                 break;
             case (GameStates.LOSS):
                 break;
         }
-		
-	}
+
+    }
 
     void ExecuteQueuedActions()
     {
@@ -152,7 +155,7 @@ public class TurnFSMScript : MonoBehaviour {
             //Debug.Log("after update:" + c.GetComponent<CityScript>().city.GetFollowers());
 			totalIncome += c.GetComponent<CityScript>().city.CalculateIncome();
         }
-        this.gameObject.GetComponent<moneyManager>().AddPlayerMoney(totalIncome);
+        Service.moneyManager.AddPlayerMoney(totalIncome);
     }
 
     public GameStates GetCurrentState()
