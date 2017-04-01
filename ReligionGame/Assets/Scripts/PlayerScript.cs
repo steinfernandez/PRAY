@@ -111,7 +111,7 @@ public class PlayerScript : MonoBehaviour {
         playerActionQueue.Enqueue(confirmedAction);
         actionPoints -= confirmedActionCost;
         Service.moneyManager.AddPlayerMoney(-confirmedActionGold);
-        confirmedAction = null;
+
         confirmedActionCost = 0;
         confirmedActionGold = 0;
         //confirmationUI.SetActive(false);
@@ -119,9 +119,11 @@ public class PlayerScript : MonoBehaviour {
         // Visualize the action queue
         GameObject btn = Instantiate(actionQueueUI);
         //string str = confirmedAction.printName;
-        btn.GetComponentInChildren<Text>().text = "Action";
+        btn.GetComponentInChildren<Text>().text = confirmedAction.printName;
         btn.transform.SetParent(actionQueueContainerUI.transform, false);
 
+
+        confirmedAction = null;
     }
 
     /*

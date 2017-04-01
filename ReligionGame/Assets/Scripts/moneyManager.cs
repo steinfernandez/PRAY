@@ -12,7 +12,7 @@ public class MoneyManager {
 	// Use this for initialization
 	public MoneyManager ()
     {
-        playerMoney = 0;
+        playerMoney = 300;
         moneyUI = GameObject.Find("/Canvas/MoneyText");
     }
 	
