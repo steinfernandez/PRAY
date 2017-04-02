@@ -55,7 +55,7 @@ public class TurnFSMScript : MonoBehaviour {
                 Service.moneyManager.Update();
                 break;
             case (GameStates.GAMETURN):
-
+                /*
                 if (timeTracker > minimumGameTurnTime)
                 {
                     ExecuteQueuedActions();
@@ -80,7 +80,17 @@ public class TurnFSMScript : MonoBehaviour {
                     timeTracker = 0f;
                 }
                 timeTracker += Time.deltaTime;
+                 */
+                ExecuteQueuedActions();
+                UpdateCoolDown();
+                UpdateIncome();
+                this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
+                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
+                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
+                this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalDisplay();
                 Service.moneyManager.Update();
+                UpdateMenu();
+                currentState = GameStates.PLAYERTURN;
                 break;
             case (GameStates.WIN):
                 break;
@@ -101,7 +111,7 @@ public class TurnFSMScript : MonoBehaviour {
                 Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue[0];
                 gameObject.GetComponent<PlayerScript>().playerActionQueue.RemoveAt(0);
                 action.Effect();
-                Debug.Log(action);
+                //Debug.Log(action);
                 // if it has cool down then add to cool down list
                 if (action.coolDown > 0)
                 {
@@ -146,6 +156,12 @@ public class TurnFSMScript : MonoBehaviour {
 			totalIncome += c.GetComponent<CityScript>().city.CalculateIncome();
         }
         Service.moneyManager.AddPlayerMoney(totalIncome);
+    }
+
+    void UpdateMenu()
+    {
+        gameObject.GetComponent<MenuManagerScript>().OpenGlobalMenu();
+
     }
 
     public GameStates GetCurrentState()
