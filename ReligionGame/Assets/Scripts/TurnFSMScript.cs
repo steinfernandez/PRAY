@@ -47,7 +47,7 @@ public class TurnFSMScript : MonoBehaviour {
                 //update global display of followers and loyalty
                 this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
                 this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
-                //this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalFollowerDisplay();
+
                 //switching to first player turn
                 currentState = GameStates.PLAYERTURN;
                 break;
@@ -93,39 +93,29 @@ public class TurnFSMScript : MonoBehaviour {
     void ExecuteQueuedActions()
     {
         //execute queued actions and calculate results
-        //string[] tempQueue;
         int length = this.gameObject.GetComponent<PlayerScript>().playerActionQueue.Count;
         if (length > 0)
         {
-            /* Sorry I don't understand so I change it
-            tempQueue = new string[10];
-            this.gameObject.GetComponent<PlayerScript>().playerActionQueue.CopyTo(tempQueue, 0);
             for (int i = 0; i < length; i++)
             {
-                Debug.Log("invoking " + tempQueue[i]);
-                this.gameObject.GetComponent<PlayerScript>().Invoke(tempQueue[i], 0);
-                IncrementRunningInvokes();
-            }
-            */
-
-            for (int i = 0; i < length; i++)
-            {
-                Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue.Dequeue();
+                Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue[0];
+                gameObject.GetComponent<PlayerScript>().playerActionQueue.RemoveAt(0);
                 action.Effect();
-
+                Debug.Log(action);
                 // if it has cool down then add to cool down list
                 if (action.coolDown > 0)
                 {
                     List<int> cd = new List<int>() {action.actionID, action.selectedCity, action.coolDown};
                     coolDownList.Add(cd);
                     // let the button be deactive so player can't press it during cooldown
-                    //GetComponent<ActionScript>().DisableActionButton(action.actionID);
+
                 }
             }
             //empty playeractionqueue
             this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
         }
     }
+
 
     void UpdateCoolDown()
     {

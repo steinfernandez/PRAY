@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class PlayerScript : MonoBehaviour {
     const int MAXIMUM_ACTION_POINTS = 5;
     [SerializeField]
     GameObject actionPointsUI;
-    public Queue playerActionQueue;
+    public List<Actions> playerActionQueue;
     Actions confirmedAction;
     int confirmedActionCost;
     private float money;
@@ -26,7 +27,7 @@ public class PlayerScript : MonoBehaviour {
     {
         actionPoints = 5;
         gameManager = this.gameObject;
-        playerActionQueue = new Queue();
+        playerActionQueue = new List<Actions>();
         confirmedAction = null;
         confirmedActionCost = 0;
         money = Service.moneyManager.GetPlayerMoney();
@@ -108,7 +109,7 @@ public class PlayerScript : MonoBehaviour {
 
     public void OnConfirmAction()
     {
-        playerActionQueue.Enqueue(confirmedAction);
+        //playerActionQueue.Add(confirmedAction);
         actionPoints -= confirmedActionCost;
         Service.moneyManager.AddPlayerMoney(-confirmedActionGold);
 
@@ -121,17 +122,11 @@ public class PlayerScript : MonoBehaviour {
         //string str = confirmedAction.printName;
         btn.GetComponentInChildren<Text>().text = confirmedAction.printName;
         btn.transform.SetParent(actionQueueContainerUI.transform, false);
-
+        btn.GetComponent<DragHandler>().SetAction(confirmedAction);
 
         confirmedAction = null;
     }
 
-    /*
-    public void OnCancelAction()
-    {
-        confirmationUI.SetActive(false);
-    }
-    */
 
     public void ClearPlayerActionQueue()
     {
