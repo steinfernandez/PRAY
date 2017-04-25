@@ -13,7 +13,7 @@ public class MoneyManager {
 	public MoneyManager ()
     {
         playerMoney = 300;
-        moneyUI = GameObject.Find("/Canvas/MoneyText");
+        moneyUI = GameObject.Find("/Canvas/RightBottomPanel/MoneyText");
     }
 	
 	// Update is called by FSMScript
