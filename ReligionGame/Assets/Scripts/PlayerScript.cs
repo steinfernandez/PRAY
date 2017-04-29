@@ -88,6 +88,7 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
+    /*
     void IE_QueuePlayerAction()
     {
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.GAMETURN)
@@ -96,6 +97,7 @@ public class PlayerScript : MonoBehaviour {
             gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
         }
     }
+*/
 
     public void RegenerateActionPoints()
     {
