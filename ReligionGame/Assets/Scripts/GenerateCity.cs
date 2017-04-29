@@ -27,21 +27,21 @@ public class GenerateCity {
 
 	// Use this for initialization
 	public void GenerateCityInit () {
-		
+
 		populationArray = new Person[populationCity];
 		for(int i=0; i<populationCity; i++) {
 			Person temp = new Person ();
             temp.following = false;
-            temp.loyalty = Random.Range(-100f, 0f);
-			temp.maleFemale = Random.Range (0, 1);
-			temp.straightGay = Random.Range (0, 1);
-			temp.individualistCollectivist = Random.Range (0, 1);
-			temp.liberalConservative = Random.Range (0, 1);
-			temp.authoritarianAnarchist = Random.Range (0, 1);
-			temp.uneducatedEducated = Random.Range (0, 1);
-			temp.poorRich = Random.Range (0, 1);
-			temp.youngOld = Random.Range (0, 1);
-			temp.rationalistSpiritual = Random.Range (0, 1);
+            temp.loyalty = Random.Range(0f, 40f);
+			temp.maleFemale = Random.Range (0f, 1f);
+			temp.straightGay = Random.Range (0f, 1f);
+			temp.individualistCollectivist = Random.Range (0f, 1f);
+			temp.liberalConservative = Random.Range (0f, 1f);
+			temp.authoritarianAnarchist = Random.Range (0f, 1f);
+			temp.uneducatedEducated = Random.Range (0f, 1f);
+			temp.poorRich = Random.Range (0f, 1f);
+			temp.youngOld = Random.Range (0.2f, 1f);
+			temp.rationalistSpiritual = Random.Range (0f, 1f);
 			populationArray [i] = temp;
 		}
 	}
