@@ -16,7 +16,8 @@ public class ProfileScript : MonoBehaviour
 	public void ShowProfile()
 	{
 		ProfileMenu.SetActive(true);
-		population = GameObject.Find("City3").GetComponent<CityScript>().city.populationArray;
+		string cityname = "City" + GetComponent<MenuManagerScript>().GetSelectedCity().ToString();
+		population = GameObject.Find(cityname).GetComponent<CityScript>().city.populationArray;
 
 		GenerateCity.Person p = population[100];
 
