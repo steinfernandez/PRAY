@@ -42,6 +42,7 @@ public class PlayerScript : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0))
             {
+
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit, 100.0f))
@@ -60,6 +61,16 @@ public class PlayerScript : MonoBehaviour {
                         gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
                         gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                     }
+                }
+                else
+                {
+                    //unselect all cities, open global menu
+                    foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+                    {
+                        c.GetComponent<CityScript>().selected = false;
+                    }
+                    gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
+                    gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                 }
             }
         }

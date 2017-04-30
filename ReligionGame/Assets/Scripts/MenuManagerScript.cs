@@ -25,6 +25,10 @@ public class MenuManagerScript : MonoBehaviour {
     GameObject LocalFollowerNumDisplay;
     [SerializeField]
     GameObject LocalAverageFollowerLoyaltyDisplay;
+    [SerializeField]
+    GameObject LocalInfo;
+    [SerializeField]
+    GameObject CityName;
 
     GameObject[] cities;
 
@@ -110,12 +114,15 @@ public class MenuManagerScript : MonoBehaviour {
         PolicyMenu.SetActive(false);
         LocalUpgradeMenu.SetActive(false);
         GlobalUpgradeMenu.SetActive(false);
+        LocalInfo.SetActive(false);
     }
 
     public void OpenLocalMenu()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
+        LocalInfo.SetActive(true);
         LocalMenu.SetActive(true);
+        CityName.GetComponent<Text>().text = "City " + (selectedCity+1);
     }
 
     public void OpenGlobalMenu()
@@ -126,7 +133,7 @@ public class MenuManagerScript : MonoBehaviour {
 
     public void OpenActionMenu()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
         ActionMenu.SetActive(true);
 
         // check cool down
@@ -145,17 +152,17 @@ public class MenuManagerScript : MonoBehaviour {
     }
     public void OpenPolicyMenu()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
         PolicyMenu.SetActive(true);
     }
     public void OpenLocalUpgradeMenu()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
         LocalUpgradeMenu.SetActive(true);
     }
     public void OpenGlobalUpgradeMenu()
     {
-        CloseAllMenus();
+        //CloseAllMenus();
         GlobalUpgradeMenu.SetActive(true);
     }
 
