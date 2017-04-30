@@ -108,8 +108,9 @@ public class MenuManagerScript : MonoBehaviour {
 
     void CloseAllMenus()
     {
-        LocalMenu.SetActive(false);
-        GlobalMenu.SetActive(false);
+
+        //LocalMenu.SetActive(false);
+        //GlobalMenu.SetActive(false);
         ActionMenu.SetActive(false);
         PolicyMenu.SetActive(false);
         LocalUpgradeMenu.SetActive(false);
@@ -119,7 +120,7 @@ public class MenuManagerScript : MonoBehaviour {
 
     public void OpenLocalMenu()
     {
-        //CloseAllMenus();
+        CloseAllMenus();
         LocalInfo.SetActive(true);
         LocalMenu.SetActive(true);
         CityName.GetComponent<Text>().text = "City " + (selectedCity+1);
@@ -133,7 +134,8 @@ public class MenuManagerScript : MonoBehaviour {
 
     public void OpenActionMenu()
     {
-        //CloseAllMenus();
+        CloseAllMenus();
+
         ActionMenu.SetActive(true);
 
         // check cool down
@@ -152,17 +154,17 @@ public class MenuManagerScript : MonoBehaviour {
     }
     public void OpenPolicyMenu()
     {
-        //CloseAllMenus();
+        CloseAllMenus();
         PolicyMenu.SetActive(true);
     }
     public void OpenLocalUpgradeMenu()
     {
-        //CloseAllMenus();
+        CloseAllMenus();
         LocalUpgradeMenu.SetActive(true);
     }
     public void OpenGlobalUpgradeMenu()
     {
-        //CloseAllMenus();
+        CloseAllMenus();
         GlobalUpgradeMenu.SetActive(true);
     }
 

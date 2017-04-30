@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -64,13 +65,17 @@ public class PlayerScript : MonoBehaviour {
                 }
                 else
                 {
-                    //unselect all cities, open global menu
-                    foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+
+                    if (Input.mousePosition.y >= 130)
                     {
-                        c.GetComponent<CityScript>().selected = false;
+                        //unselect all cities, open global menu
+                        foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+                        {
+                            c.GetComponent<CityScript>().selected = false;
+                        }
+                        gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
+                        gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                     }
-                    gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
-                    gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                 }
             }
         }
