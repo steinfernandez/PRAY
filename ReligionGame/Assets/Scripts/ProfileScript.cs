@@ -21,6 +21,7 @@ public class ProfileScript : MonoBehaviour
 
 		GenerateCity.Person p = population[100];
 
+		GameObject.Find("/Canvas/Profile/ProfilePanel/Toggle").GetComponent<Toggle>().isOn = p.following;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider1").GetComponent<Slider>().value = p.maleFemale;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider2").GetComponent<Slider>().value = p.straightGay;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider3").GetComponent<Slider>().value = p.individualistCollectivist;
@@ -37,6 +38,7 @@ public class ProfileScript : MonoBehaviour
 		GenerateCity.Person p = population[100 + i * 5];
 		i += 1;
 
+		GameObject.Find("/Canvas/Profile/ProfilePanel/Toggle").GetComponent<Toggle>().isOn = p.following;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider1").GetComponent<Slider>().value = p.maleFemale;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider2").GetComponent<Slider>().value = p.straightGay;
 		GameObject.Find("/Canvas/Profile/ProfilePanel/Slider3").GetComponent<Slider>().value = p.individualistCollectivist;
