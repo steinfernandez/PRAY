@@ -65,8 +65,11 @@ public class PlayerScript : MonoBehaviour {
                 }
                 else
                 {
-
-                    if (Input.mousePosition.y >= 130)
+                    if ((Input.mousePosition.x >= 830) && (Input.mousePosition.y >= 530))
+                    {
+                        Debug.Log("profile");
+                    }
+                    else if (Input.mousePosition.y >= 130)
                     {
                         //unselect all cities, open global menu
                         foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
@@ -76,6 +79,7 @@ public class PlayerScript : MonoBehaviour {
                         gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
                         gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
                     }
+
                 }
             }
         }

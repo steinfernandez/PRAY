@@ -84,13 +84,16 @@ public class MenuManagerScript : MonoBehaviour {
 
     public void UpdateLocalDisplay()
     {
+        Debug.Log(selectedCity);
         string selectedCityName = "City" + selectedCity.ToString();
         GameObject currentCity = GameObject.Find(selectedCityName); //eventually display city names
+        CityName.GetComponent<Text>().text = selectedCityName;
+
         //get followers, calculate percentage, update display
         int localFollowers = currentCity.GetComponent<CityScript>().city.GetFollowers();
-        Debug.Log("localFollwerinMenu:" + localFollowers);
         float localFollowerPercentage = (float) localFollowers * 100f / currentCity.GetComponent<CityScript>().city.GetPopulation();
         LocalFollowerNumDisplay.GetComponent<Text>().text = "Followers: \n" + localFollowers.ToString() + " (" + localFollowerPercentage.ToString("F2") + "%)";
+
         //get local loyalty, update display
         float localLoyalty = currentCity.GetComponent<CityScript>().city.CalculateMeanLoyalty();
         LocalAverageFollowerLoyaltyDisplay.GetComponent<Text>().text = "Avg. Follower Loyalty: " + localLoyalty.ToString("F2") + "%";
@@ -123,7 +126,7 @@ public class MenuManagerScript : MonoBehaviour {
         CloseAllMenus();
         LocalInfo.SetActive(true);
         LocalMenu.SetActive(true);
-        CityName.GetComponent<Text>().text = "City " + (selectedCity+1);
+
     }
 
     public void OpenGlobalMenu()
