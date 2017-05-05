@@ -5,41 +5,50 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript {
 
     public GameObject defaultUI;
     public GameObject cityUI;
     GameObject gameManager;
     int actionPoints;
     const int MAXIMUM_ACTION_POINTS = 5;
-    [SerializeField]
-    GameObject actionPointsUI;
+
+
     public List<Actions> playerActionQueue;
     Actions confirmedAction;
     int confirmedActionCost;
     private float money;
     private int confirmedActionGold;
-    public GameObject actionQueueUI;
-    public GameObject actionQueueContainerUI;
+    GameObject actionQueueUI;
+    GameObject actionQueueContainerUI;
+    GameObject actionPointsUI;
 
+
+    public PlayerScript()
+    {
+        Start();
+    }
 
     // Use this for initialization
     void Start ()
     {
         actionPoints = 5;
-        gameManager = this.gameObject;
+        gameManager = GameObject.Find("GameManager");
         playerActionQueue = new List<Actions>();
         confirmedAction = null;
         confirmedActionCost = 0;
         money = Service.moneyManager.GetPlayerMoney();
+        actionPointsUI = GameObject.Find("Canvas/RightBottomPanel/ActionPointDisplay");
+        actionQueueContainerUI = GameObject.Find("Canvas/ActionQueue");
+        actionQueueUI = Resources.Load<GameObject>("Action1");
     }
 	
 	// Update is called once per frame
-	void Update ()
+	public void Update ()
     {
         //Debug.Log("queue size:" + playerActionQueue.Count);
         UpdateActionPointDisplay();
-        if (this.gameObject.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
+        if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -140,7 +149,7 @@ public class PlayerScript : MonoBehaviour {
         //confirmationUI.SetActive(false);
 
         // Visualize the action queue
-        GameObject btn = Instantiate(actionQueueUI);
+        GameObject btn = GameObject.Instantiate(actionQueueUI);
         //string str = confirmedAction.printName;
         btn.GetComponentInChildren<Text>().text = confirmedAction.printName;
         btn.transform.SetParent(actionQueueContainerUI.transform, false);

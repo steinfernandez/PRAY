@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +8,6 @@ public class TurnFSMScript : MonoBehaviour {
     public enum GameStates
     {
         SETUP,
-        CUSTOMIZE,
         START,
         PLAYERTURN,
         GAMETURN,
@@ -16,10 +15,7 @@ public class TurnFSMScript : MonoBehaviour {
         WIN
     }
 
-    private float minimumGameTurnTime;
-    private float timeTracker;
-    private int runningInvokes;
-    private bool monadFunctionExecution;
+
     public List<List<int>> coolDownList;
 
     private GameStates currentState;
@@ -28,10 +24,6 @@ public class TurnFSMScript : MonoBehaviour {
 	void Start ()
     {
         currentState = GameStates.START;
-        minimumGameTurnTime = 1f;
-        timeTracker = 0f;
-        runningInvokes = 0;
-        monadFunctionExecution = false;
         coolDownList = new List<List<int>>();
 	}
 	
@@ -43,51 +35,27 @@ public class TurnFSMScript : MonoBehaviour {
         {
             case (GameStates.START):
                 //populate all cities and initialize base follower population
-                this.gameObject.GetComponent<populationScript>().PopulateCities();
+                PopulateCities();
                 //update global display of followers and loyalty
-                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
-                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
+                gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
+                gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
 
                 //switching to first player turn
                 currentState = GameStates.PLAYERTURN;
                 break;
             case (GameStates.PLAYERTURN):
+                Service.playerScript.Update();
                 Service.moneyManager.Update();
                 break;
             case (GameStates.GAMETURN):
-                /*
-                if (timeTracker > minimumGameTurnTime)
-                {
-                    ExecuteQueuedActions();
-                    UpdateCoolDown();
 
-                    //update followers and calculate income
-                    if (monadFunctionExecution == false
-                    ) //these functions should only be executed once before next playerturn
-                    {
-                        UpdateIncome();
-                        this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
-                        this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
-                        this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
-                        this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalDisplay();
-                        monadFunctionExecution = true;
-                    }
-                    if (runningInvokes == 0)
-                    {
-                        monadFunctionExecution = false;
-                        currentState = GameStates.PLAYERTURN;
-                    }
-                    timeTracker = 0f;
-                }
-                timeTracker += Time.deltaTime;
-                 */
                 ExecuteQueuedActions();
                 UpdateCoolDown();
                 UpdateIncome();
-                this.gameObject.GetComponent<PlayerScript>().RegenerateActionPoints();
-                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
-                this.gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
-                this.gameObject.GetComponent<MenuManagerScript>().UpdateLocalDisplay();
+                Service.playerScript.RegenerateActionPoints();
+                gameObject.GetComponent<MenuManagerScript>().UpdateGlobalFollowerDisplay();
+                gameObject.GetComponent<MenuManagerScript>().UpdateGlobalLoyaltyDisplay();
+                gameObject.GetComponent<MenuManagerScript>().UpdateLocalDisplay();
                 Service.moneyManager.Update();
                 UpdateMenu();
                 currentState = GameStates.PLAYERTURN;
@@ -103,13 +71,13 @@ public class TurnFSMScript : MonoBehaviour {
     void ExecuteQueuedActions()
     {
         //execute queued actions and calculate results
-        int length = this.gameObject.GetComponent<PlayerScript>().playerActionQueue.Count;
+        int length = Service.playerScript.playerActionQueue.Count;
         if (length > 0)
         {
             for (int i = 0; i < length; i++)
             {
-                Actions action = (Actions)gameObject.GetComponent<PlayerScript>().playerActionQueue[0];
-                gameObject.GetComponent<PlayerScript>().playerActionQueue.RemoveAt(0);
+                Actions action = (Actions)Service.playerScript.playerActionQueue[0];
+                Service.playerScript.playerActionQueue.RemoveAt(0);
                 action.Effect();
                 //Debug.Log(action);
                 // if it has cool down then add to cool down list
@@ -122,7 +90,7 @@ public class TurnFSMScript : MonoBehaviour {
                 }
             }
             //empty playeractionqueue
-            this.gameObject.GetComponent<PlayerScript>().ClearPlayerActionQueue();
+            Service.playerScript.ClearPlayerActionQueue();
         }
     }
 
@@ -173,15 +141,15 @@ public class TurnFSMScript : MonoBehaviour {
     {
         currentState = gs;
     }
-    /*
-    void IncrementRunningInvokes()
-    {
-        runningInvokes++;
-    }
-    */
 
-    public void DecrementRunningInvokes()
+    void PopulateCities()
     {
-        runningInvokes--;
+        //Initialize a random city as your starting point and grant you followers there
+        GameObject[] cities = GameObject.FindGameObjectsWithTag("City");
+        int randstart = Random.Range(0, 5);
+        Debug.Log(cities[randstart].gameObject.name);
+        cities[randstart].GetComponent<CityScript>().city.InitializeBaseFollowers();
     }
+
+
 }

@@ -11,7 +11,7 @@ public class EndTurnScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-	    playerActionQueue = GameObject.Find("GameManager").GetComponent<PlayerScript>().playerActionQueue;
+	    playerActionQueue = Service.playerScript.playerActionQueue;
 	}
 	
 	// Update is called once per frame

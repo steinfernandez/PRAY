@@ -11,28 +11,28 @@ public class ActionScript : MonoBehaviour
 		GameObject gameManager = GameObject.Find("GameManager");
 		int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
 		SendMissionary action = new SendMissionary(cityID);
-		gameManager.GetComponent<PlayerScript>().QueuePlayerAction(action);
+		Service.playerScript.QueuePlayerAction(action);
 	}
 
 	public void RentBillboardAction() {
 		GameObject gameManager = GameObject.Find("GameManager");
 		int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
 		RentBillboard action = new RentBillboard(cityID);
-		gameManager.GetComponent<PlayerScript>().QueuePlayerAction(action);
+		Service.playerScript.QueuePlayerAction(action);
 	}
 
     public void HireTVSlotAction() {
         GameObject gameManager = GameObject.Find("GameManager");
         int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
         HireTVSlot action = new HireTVSlot(cityID);
-        gameManager.GetComponent<PlayerScript>().QueuePlayerAction(action);
+	    Service.playerScript.QueuePlayerAction(action);
     }
 
     public void PosterCampaignAction() {
         GameObject gameManager = GameObject.Find("GameManager");
         int cityID = gameManager.GetComponent<MenuManagerScript>().GetSelectedCity();
         PosterCampaign action = new PosterCampaign(cityID);
-        gameManager.GetComponent<PlayerScript>().QueuePlayerAction(action);
+	    Service.playerScript.QueuePlayerAction(action);
     }
 
 
