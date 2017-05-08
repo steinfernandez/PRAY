@@ -112,8 +112,7 @@ public class MenuManagerScript : MonoBehaviour {
     void CloseAllMenus()
     {
 
-        //LocalMenu.SetActive(false);
-        //GlobalMenu.SetActive(false);
+        LocalMenu.SetActive(false);
         ActionMenu.SetActive(false);
         PolicyMenu.SetActive(false);
         LocalUpgradeMenu.SetActive(false);

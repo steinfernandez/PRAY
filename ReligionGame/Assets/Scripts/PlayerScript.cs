@@ -81,6 +81,7 @@ public class PlayerScript {
                     else if (Input.mousePosition.y >= 130)
                     {
                         //unselect all cities, open global menu
+                        Debug.Log("unselect city");
                         foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
                         {
                             c.GetComponent<CityScript>().selected = false;
@@ -117,16 +118,7 @@ public class PlayerScript {
         }
     }
 
-    /*
-    void IE_QueuePlayerAction()
-    {
-        if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.GAMETURN)
-        {
-            Debug.Log("executed player action.");
-            gameManager.GetComponent<TurnFSMScript>().DecrementRunningInvokes();
-        }
-    }
-*/
+
 
     public void RegenerateActionPoints()
     {
