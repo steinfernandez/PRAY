@@ -35,5 +35,8 @@ public class ActionScript : MonoBehaviour
 	    Service.playerScript.QueuePlayerAction(action);
     }
 
-
+	public void EndTurn()
+	{
+		Service.actionManager.GenerateActionQueue();
+	}
 }

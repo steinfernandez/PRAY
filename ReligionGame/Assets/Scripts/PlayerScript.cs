@@ -14,7 +14,7 @@ public class PlayerScript {
     const int MAXIMUM_ACTION_POINTS = 5;
 
 
-    public List<Actions> playerActionQueue;
+    //public List<Actions> playerActionQueue;
     Actions confirmedAction;
     int confirmedActionCost;
     private float money;
@@ -34,7 +34,7 @@ public class PlayerScript {
     {
         actionPoints = 5;
         gameManager = GameObject.Find("GameManager");
-        playerActionQueue = new List<Actions>();
+        //playerActionQueue = new List<Actions>();
         confirmedAction = null;
         confirmedActionCost = 0;
         money = Service.moneyManager.GetPlayerMoney();
@@ -46,13 +46,12 @@ public class PlayerScript {
 	// Update is called once per frame
 	public void Update ()
     {
-        //Debug.Log("queue size:" + playerActionQueue.Count);
+
         UpdateActionPointDisplay();
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
             if (Input.GetMouseButtonDown(0))
             {
-
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit, 100.0f))
@@ -97,8 +96,7 @@ public class PlayerScript {
 
 	public void QueuePlayerAction(Actions action)
     {
-        
-		//Debug.Log ("action triggered~!!!!");
+
         int APcost = action.AP;
         int gold = action.cost;
 
@@ -124,6 +122,7 @@ public class PlayerScript {
     {
         actionPoints = MAXIMUM_ACTION_POINTS;
     }
+    
 
     void UpdateActionPointDisplay()
     {
@@ -132,7 +131,7 @@ public class PlayerScript {
 
     public void OnConfirmAction()
     {
-        //playerActionQueue.Add(confirmedAction);
+
         actionPoints -= confirmedActionCost;
         Service.moneyManager.AddPlayerMoney(-confirmedActionGold);
 
@@ -142,7 +141,7 @@ public class PlayerScript {
 
         // Visualize the action queue
         GameObject btn = GameObject.Instantiate(actionQueueUI);
-        //string str = confirmedAction.printName;
+
         btn.GetComponentInChildren<Text>().text = confirmedAction.printName;
         btn.transform.SetParent(actionQueueContainerUI.transform, false);
         btn.GetComponent<DragHandler>().SetAction(confirmedAction);
@@ -150,9 +149,4 @@ public class PlayerScript {
         confirmedAction = null;
     }
 
-
-    public void ClearPlayerActionQueue()
-    {
-        playerActionQueue.Clear();
-    }
 }
