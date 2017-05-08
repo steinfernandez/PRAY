@@ -13,17 +13,17 @@ public class DecreeScript : MonoBehaviour {
 
 	public void SupportGroupDecree() {
 		SupportGroup decree = new SupportGroup (6);
-		gameManager.GetComponent<PlayerScript>().QueuePlayerAction(decree);
+		Service.playerScript.QueuePlayerAction(decree);
 	}
 
 	public void YouthClubDecree() {
 		YouthClub decree = new YouthClub (6);
-		gameManager.GetComponent<PlayerScript>().QueuePlayerAction(decree);
+		Service.playerScript.QueuePlayerAction(decree);
 	}
 
 	public void RelibiousCollegeDecree() {
 		ReligiousColleges decree = new ReligiousColleges (6);
-		gameManager.GetComponent<PlayerScript>().QueuePlayerAction(decree);
+		Service.playerScript.QueuePlayerAction(decree);
 	}
 		
 }

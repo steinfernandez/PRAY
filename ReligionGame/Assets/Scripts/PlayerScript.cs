@@ -1,9 +1,6 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+
 
 public class PlayerScript {
 
@@ -34,7 +31,6 @@ public class PlayerScript {
     {
         actionPoints = 5;
         gameManager = GameObject.Find("GameManager");
-        //playerActionQueue = new List<Actions>();
         confirmedAction = null;
         confirmedActionCost = 0;
         money = Service.moneyManager.GetPlayerMoney();
@@ -48,6 +44,7 @@ public class PlayerScript {
     {
 
         UpdateActionPointDisplay();
+
         if (gameManager.GetComponent<TurnFSMScript>().GetCurrentState() == TurnFSMScript.GameStates.PLAYERTURN)
         {
             if (Input.GetMouseButtonDown(0))
@@ -62,13 +59,7 @@ public class PlayerScript {
                     }
                     else
                     {
-                        //unselect all cities, open global menu
-                        foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
-                        {
-                            c.GetComponent<CityScript>().selected = false;
-                        }
-                        gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
-                        gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
+                        UnselectedCity();
                     }
                 }
                 else
@@ -79,20 +70,14 @@ public class PlayerScript {
                     }
                     else if (Input.mousePosition.y >= 130)
                     {
-                        //unselect all cities, open global menu
-                        Debug.Log("unselect city");
-                        foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
-                        {
-                            c.GetComponent<CityScript>().selected = false;
-                        }
-                        gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
-                        gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
+                       UnselectedCity();
                     }
 
                 }
             }
         }
 	}
+
 
 	public void QueuePlayerAction(Actions action)
     {
@@ -122,7 +107,7 @@ public class PlayerScript {
     {
         actionPoints = MAXIMUM_ACTION_POINTS;
     }
-    
+
 
     void UpdateActionPointDisplay()
     {
@@ -131,22 +116,32 @@ public class PlayerScript {
 
     public void OnConfirmAction()
     {
-
         actionPoints -= confirmedActionCost;
         Service.moneyManager.AddPlayerMoney(-confirmedActionGold);
 
         confirmedActionCost = 0;
         confirmedActionGold = 0;
-        //confirmationUI.SetActive(false);
 
         // Visualize the action queue
         GameObject btn = GameObject.Instantiate(actionQueueUI);
 
         btn.GetComponentInChildren<Text>().text = confirmedAction.printName;
+        Debug.Log(confirmedAction.printName);
         btn.transform.SetParent(actionQueueContainerUI.transform, false);
         btn.GetComponent<DragHandler>().SetAction(confirmedAction);
 
         confirmedAction = null;
+    }
+
+    void UnselectedCity()
+    {
+        //unselect all cities, open global menu
+        foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+        {
+            c.GetComponent<CityScript>().selected = false;
+        }
+        gameManager.GetComponent<MenuManagerScript>().SetSelectedCity(0);
+        gameManager.GetComponent<MenuManagerScript>().OpenGlobalMenu();
     }
 
 }

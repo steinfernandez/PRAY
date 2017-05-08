@@ -6,11 +6,6 @@ public class Decree : Actions
 {
 
 	public int decreeID;
-	public int cost;
-	public int AP;
-	public int coolDown;
-	public string description;
-	public string printName;
 
 	public Decree(int city) : base(city)
 	{
@@ -22,6 +17,27 @@ public class Decree : Actions
 		//Override
 	}
 
+	protected void WholePopulation(float amount)
+	{
+		foreach (GameObject c in GameObject.FindGameObjectsWithTag("City"))
+		{
+			GenerateCity currentCity = c.GetComponent<CityScript>().city;
+			for (int i = 0; i <= currentCity.GetPopulation(); i++)
+			{
+				SetCollectivist(currentCity.populationArray[i], amount);
+			}
+		}
+	}
+
+	protected void SetCollectivist(GenerateCity.Person p, float amount)
+	{
+		if (p.individualistCollectivist >= 0.5f)
+		{
+			p.loyalty += amount;
+		}
+
+	}
+
 }
 
 public class SupportGroup : Decree 
@@ -30,7 +46,7 @@ public class SupportGroup : Decree
 	public SupportGroup(int city) : base(city)
 	{
 		decreeID = 0;
-		cost = 600;
+		cost = 300;
 		AP = 4;
 		coolDown = 2;
 		description = "Collectivist +30, female +30, authoritarian +20, poor +20, spiritualist +30\nRich -20, Individualist -50";
@@ -39,7 +55,7 @@ public class SupportGroup : Decree
 
 	public override void Effect()
 	{
-		
+		WholePopulation(0.3f);
 	}
 }
 

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/* To do:
- * - coolDown system
- * - show description
- * - Actual Effects
-*/
 
 
 public class Actions
@@ -53,7 +47,7 @@ public class SendMissionary : Actions
         GenerateCity currentCity = GameObject.Find(selectedCityName).GetComponent<CityScript>().city;
         currentCity.IncreaseNonfollowerLoyalty(15f);
 
-        // handle cooldown
+
     }
 
 }
@@ -77,7 +71,7 @@ public class RentBillboard : Actions
         GenerateCity currentCity = GameObject.Find(selectedCityName).GetComponent<CityScript>().city;
         currentCity.IncreaseEveryoneLoyalty(0.04f);
 
-        // handle cooldown
+
     }
 		
 }

@@ -28,7 +28,7 @@ public class TooltipScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     void Start()
     {
-        Debug.Log("start tooltip script");
+
         tooltipInstance = GameObject.Instantiate(tooltipPrefab, this.transform.position, Quaternion.identity) as GameObject;
         tooltipInstance.transform.SetParent(GameObject.Find("Canvas").transform);
         tooltipInstance.transform.localScale = Vector3.one;
@@ -41,7 +41,6 @@ public class TooltipScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if(isOver)
         {
-            Debug.Log("This object is being moused over.");
             tooltipInstance.SetActive(true);
             timeCounter += Time.deltaTime;
         }
